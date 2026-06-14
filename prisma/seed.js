@@ -1,5 +1,5 @@
-import { PrismaClient, Role } from '@prisma/client'
-import * as bcrypt from 'bcrypt'
+const { PrismaClient, Role } = require('@prisma/client')
+const bcrypt = require('bcrypt')
 
 const prisma = new PrismaClient()
 
