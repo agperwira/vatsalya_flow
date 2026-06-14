@@ -1,0 +1,57 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+model User {
+  id        String      @id @default(cuid())
+  name      String
+  email     String      @unique
+  password  String
+  role      Role        @default(MEMBER)
+  phone     String?
+  trimester Int?        // 1, 2, or 3
+  isActive  Boolean     @default(true)
+  createdAt DateTime    @default(now())
+  videos    UserVideo[]
+}
+
+model Video {
+  id          String      @id @default(cuid())
+  title       String
+  description String?
+  youtubeId   String
+  category    String      // e.g., 'trimester-1', 'trimester-2', 'trimester-3', 'pasca-melahirkan', 'umum'
+  duration    String?
+  thumbnail   String?
+  isPublished Boolean     @default(true)
+  order       Int         @default(0)
+  createdAt   DateTime    @default(now())
+  users       UserVideo[]
+}
+
+model UserVideo {
+  id         String    @id @default(cuid())
+  userId     String
+  videoId    String
+  assignedAt DateTime  @default(now())
+  watchedAt  DateTime?
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  video      Video     @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, videoId])
+}
+
+model Setting {
+  key   String @id
+  value String // Stores JSON data for landing page contents or custom links
+}
