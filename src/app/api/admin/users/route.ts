@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import * as bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 
 async function verifyAdmin() {
   const session = await getServerSession(authOptions)
