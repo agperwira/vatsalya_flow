@@ -9,7 +9,8 @@ export const authOptions: NextAuthOptions = {
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
+        loginType: { label: "Login Type", type: "text" }
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -26,6 +27,15 @@ export const authOptions: NextAuthOptions = {
 
         if (!user.isActive) {
           throw new Error("Akun Anda dinonaktifkan. Silakan hubungi admin.")
+        }
+
+        // Restrict login based on role and login page type
+        if (credentials.loginType === "admin" && user.role !== "ADMIN") {
+          throw new Error("Anda tidak memiliki akses ke portal admin")
+        }
+
+        if (credentials.loginType === "member" && user.role === "ADMIN") {
+          throw new Error("Akun admin tidak dapat login di halaman member. Silakan gunakan portal admin.")
         }
 
         const isPasswordValid = await bcrypt.compare(credentials.password, user.password)

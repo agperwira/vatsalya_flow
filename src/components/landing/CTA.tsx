@@ -4,11 +4,14 @@ import React from "react"
 import { MessageSquareShare } from "lucide-react"
 import { siteConfig } from "@/config/content"
 
-export default function CTA() {
+export default function CTA({ content, contactNumber }: { content?: typeof siteConfig.cta, contactNumber?: string }) {
+  const data = content || siteConfig.cta
+  const phone = contactNumber || siteConfig.whatsappNumber
+
   const encodedMessage = encodeURIComponent(
     "Halo Admin Vatsalya Yoga, saya ingin berkonsultasi mengenai kelas prenatal yoga yang sesuai untuk kehamilan saya. Terima kasih."
   )
-  const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodedMessage}`
+  const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`
 
   return (
     <section className="py-24 bg-white relative overflow-hidden">
@@ -26,10 +29,10 @@ export default function CTA() {
               Mulai Perjalanan Bunda
             </span>
             <h2 className="text-3xl md:text-5xl font-serif font-semibold leading-tight text-[#FAF7F2]">
-              {siteConfig.cta.title}
+              {data.title}
             </h2>
             <p className="text-sm md:text-base text-[#FAF7F2]/70 leading-relaxed font-sans max-w-xl mx-auto">
-              {siteConfig.cta.subtitle}
+              {data.subtitle}
             </p>
 
             <div className="pt-6">
@@ -40,7 +43,7 @@ export default function CTA() {
                 className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[#FAF7F2] text-dark-espresso text-sm font-semibold hover:bg-white hover:scale-105 active:scale-95 transition-all shadow-lg"
               >
                 <MessageSquareShare className="w-5 h-5 text-accent-rose" />
-                {siteConfig.cta.buttonText}
+                {data.buttonText}
               </a>
             </div>
           </div>

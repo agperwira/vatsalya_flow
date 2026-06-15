@@ -5,7 +5,9 @@ import { motion } from "framer-motion"
 import { ShieldCheck, Heart, Sparkles } from "lucide-react"
 import { siteConfig } from "@/config/content"
 
-export default function About() {
+export default function About({ content }: { content?: typeof siteConfig.about }) {
+  const data = content || siteConfig.about
+
   return (
     <section id="about" className="py-24 bg-[#FAF7F2] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -22,14 +24,14 @@ export default function About() {
             {/* Embedded Quote Box */}
             <div className="absolute -bottom-8 -right-4 md:right-4 bg-white p-5 rounded-2xl shadow-lg border border-gray-100 max-w-xs glass">
               <p className="text-sm font-serif italic text-dark-espresso leading-relaxed">
-                {siteConfig.about.teacherQuote}
+                {data.teacherQuote}
               </p>
               <div className="mt-3">
                 <p className="text-xs font-bold text-dark-espresso">
-                  {siteConfig.about.teacherName}
+                  {data.teacherName}
                 </p>
                 <p className="text-[10px] text-dark-espresso/50">
-                  {siteConfig.about.teacherRole}
+                  {data.teacherRole}
                 </p>
               </div>
             </div>
@@ -38,14 +40,14 @@ export default function About() {
           {/* Text Content Block */}
           <div className="lg:col-span-7 space-y-6">
             <span className="text-xs font-bold tracking-widest text-accent-rose uppercase">
-              {siteConfig.about.subtitle}
+              {data.subtitle}
             </span>
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-dark-espresso leading-tight">
-              {siteConfig.about.title}
+              {data.title}
             </h2>
             <div className="space-y-4 text-dark-espresso/70 text-sm md:text-base leading-relaxed">
-              <p>{siteConfig.about.paragraph1}</p>
-              <p>{siteConfig.about.paragraph2}</p>
+              <p>{data.paragraph1}</p>
+              <p>{data.paragraph2}</p>
             </div>
 
             {/* Value Props Grid */}

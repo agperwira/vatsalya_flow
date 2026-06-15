@@ -4,7 +4,9 @@ import React from "react"
 import { CalendarRange, MapPin, Laptop } from "lucide-react"
 import { siteConfig } from "@/config/content"
 
-export default function Jadwal() {
+export default function Jadwal({ content }: { content?: typeof siteConfig.schedule }) {
+  const data = content || siteConfig.schedule
+
   return (
     <section id="jadwal" className="py-24 bg-white relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -15,17 +17,17 @@ export default function Jadwal() {
             Jadwal Sesi
           </span>
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-dark-espresso leading-tight">
-            {siteConfig.schedule.title}
+            {data.title}
           </h2>
           <p className="text-sm md:text-base text-dark-espresso/60">
-            {siteConfig.schedule.subtitle}
+            {data.subtitle}
           </p>
         </div>
 
         {/* Schedule list/table representation */}
         <div className="max-w-4xl mx-auto overflow-hidden rounded-3xl border border-dark-espresso/5 shadow-sm bg-[#FAF7F2]">
           <div className="divide-y divide-dark-espresso/5">
-            {siteConfig.schedule.items.map((item, index) => {
+            {data.items.map((item, index) => {
               const isZoom = item.type.toLowerCase().includes("zoom") || item.type.toLowerCase().includes("online")
               return (
                 <div

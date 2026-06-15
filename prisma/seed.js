@@ -4,6 +4,13 @@ const bcrypt = require('bcryptjs')
 const prisma = new PrismaClient()
 
 async function main() {
+  // Check if database is already seeded to prevent overwriting user data
+  const userCount = await prisma.user.count()
+  if (userCount > 0) {
+    console.log('Database already contains data. Skipping seeding to prevent data loss.')
+    return
+  }
+
   console.log('Seeding database...')
 
   // Clean tables

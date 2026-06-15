@@ -41,6 +41,7 @@ export default function AdminLogin() {
         redirect: false,
         email: data.email,
         password: data.password,
+        loginType: "admin",
       })
 
       if (result?.error) {

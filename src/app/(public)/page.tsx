@@ -11,24 +11,41 @@ import Jadwal from "@/components/landing/Jadwal"
 import FAQ from "@/components/landing/FAQ"
 import CTA from "@/components/landing/CTA"
 import Footer from "@/components/landing/Footer"
+import { prisma } from "@/lib/prisma"
+import { siteConfig } from "@/config/content"
 
-export default function LandingPage() {
+export const dynamic = "force-dynamic"
+
+export default async function LandingPage() {
+  const contentSetting = await prisma.setting.findUnique({ where: { key: "landing_page_content" } })
+  
+  // Use DB content if available, fallback to static siteConfig
+  const content = contentSetting ? JSON.parse(contentSetting.value) : siteConfig
+
+  // WhatsApp number can be customized in general settings or landing page content
+  const whatsappSetting = await prisma.setting.findUnique({ where: { key: "whatsapp_number" } })
+  const whatsappNumber = whatsappSetting ? JSON.parse(whatsappSetting.value).number : (content.whatsappNumber || siteConfig.whatsappNumber)
+
+  // Social Links
+  const socialLinksSetting = await prisma.setting.findUnique({ where: { key: "social_links" } })
+  const socialLinks = socialLinksSetting ? JSON.parse(socialLinksSetting.value) : (content.socialLinks || siteConfig.socialLinks)
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      <Navbar content={content.navbar} contactNumber={whatsappNumber} socialLinks={socialLinks} />
       <main className="flex-grow">
-        <Hero />
-        <TrustBar />
-        <About />
-        <Program />
-        <VideoPreview />
-        <Manfaat />
-        <Testimoni />
-        <Jadwal />
-        <FAQ />
-        <CTA />
+        <Hero content={content.hero} />
+        <TrustBar content={content.trustBar} />
+        <About content={content.about} />
+        <Program content={content.program} />
+        <VideoPreview content={content.videoPreview} />
+        <Manfaat content={content.manfaat} />
+        <Testimoni content={content.testimonials} />
+        <Jadwal content={content.schedule} />
+        <FAQ content={content.faqs} />
+        <CTA content={content.cta} contactNumber={whatsappNumber} />
       </main>
-      <Footer />
+      <Footer socialLinks={socialLinks} contactNumber={whatsappNumber} />
     </div>
   )
 }

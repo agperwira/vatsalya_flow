@@ -5,7 +5,9 @@ import { motion } from "framer-motion"
 import { Heart, Moon, Sparkles, Users, ArrowRight } from "lucide-react"
 import { siteConfig } from "@/config/content"
 
-export default function Manfaat() {
+export default function Manfaat({ content }: { content?: typeof siteConfig.manfaat }) {
+  const data = content || siteConfig.manfaat
+
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case "heart":
@@ -31,16 +33,16 @@ export default function Manfaat() {
             Manfaat Prenatal
           </span>
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-dark-espresso leading-tight">
-            {siteConfig.manfaat.title}
+            {data.title}
           </h2>
           <p className="text-sm md:text-base text-dark-espresso/60">
-            {siteConfig.manfaat.subtitle}
+            {data.subtitle}
           </p>
         </div>
 
         {/* Benefits Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          {siteConfig.manfaat.items.map((item, index) => (
+          {data.items.map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}

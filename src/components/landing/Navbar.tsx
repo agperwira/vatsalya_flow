@@ -6,10 +6,19 @@ import { useSession, signOut } from "next-auth/react"
 import { Menu, X, ArrowRight, User } from "lucide-react"
 import { siteConfig } from "@/config/content"
 
-export default function Navbar() {
+interface NavbarProps {
+  content?: typeof siteConfig.navbar
+  contactNumber?: string
+  socialLinks?: typeof siteConfig.socialLinks
+}
+
+export default function Navbar({ content, contactNumber, socialLinks }: NavbarProps) {
   const { data: session } = useSession()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+
+  const links = content?.links || siteConfig.navbar.links
+  const ctaText = content?.ctaText || siteConfig.navbar.ctaText
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,7 +50,7 @@ export default function Navbar() {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
-          {siteConfig.navbar.links.map((link) => (
+          {links.map((link) => (
             <Link
               key={link.label}
               href={link.href}
@@ -75,7 +84,7 @@ export default function Navbar() {
               href="/login"
               className="px-5 py-2.5 rounded-full bg-accent-rose text-white text-xs font-semibold tracking-wide hover:bg-accent-rose/95 transition-all shadow-sm flex items-center gap-1.5 group"
             >
-              {siteConfig.navbar.ctaText}
+              {ctaText}
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </Link>
           )}
@@ -93,7 +102,7 @@ export default function Navbar() {
       {/* Mobile Drawer */}
       {isOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-lg border-b border-gray-100 shadow-lg py-6 px-6 flex flex-col gap-5 animate-fade-in">
-          {siteConfig.navbar.links.map((link) => (
+          {links.map((link) => (
             <Link
               key={link.label}
               href={link.href}
@@ -130,7 +139,7 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
               className="w-full text-center px-5 py-3 rounded-full bg-accent-rose text-white text-sm font-semibold flex items-center justify-center gap-1.5"
             >
-              {siteConfig.navbar.ctaText}
+              {ctaText}
               <ArrowRight className="w-4 h-4" />
             </Link>
           )}

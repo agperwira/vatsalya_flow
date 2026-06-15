@@ -5,8 +5,10 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Plus, Minus } from "lucide-react"
 import { siteConfig } from "@/config/content"
 
-export default function FAQ() {
+export default function FAQ({ content }: { content?: typeof siteConfig.faqs }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  const data = content || siteConfig.faqs
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index)
@@ -28,7 +30,7 @@ export default function FAQ() {
 
         {/* Accordion Lists */}
         <div className="space-y-4">
-          {siteConfig.faqs.map((faq, index) => {
+          {data.map((faq, index) => {
             const isOpen = openIndex === index
             return (
               <div

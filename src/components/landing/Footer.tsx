@@ -5,7 +5,10 @@ import Link from "next/link"
 import { Instagram, Youtube, Facebook } from "lucide-react"
 import { siteConfig } from "@/config/content"
 
-export default function Footer() {
+export default function Footer({ socialLinks, contactNumber }: { socialLinks?: typeof siteConfig.socialLinks; contactNumber?: string }) {
+  const links = socialLinks || siteConfig.socialLinks
+  const whatsapp = contactNumber || siteConfig.whatsappNumber
+
   return (
     <footer className="bg-dark-espresso text-[#FAF7F2] pt-20 pb-10 border-t border-white/5 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-white/5">
@@ -25,7 +28,7 @@ export default function Footer() {
           {/* Social Links */}
           <div className="flex gap-4">
             <a
-              href={siteConfig.socialLinks.instagram}
+              href={links.instagram}
               target="_blank"
               rel="noopener noreferrer"
               className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-[#FAF7F2]/60 hover:text-white hover:border-white transition-colors"
@@ -33,7 +36,7 @@ export default function Footer() {
               <Instagram className="w-4 h-4" />
             </a>
             <a
-              href={siteConfig.socialLinks.youtube}
+              href={links.youtube}
               target="_blank"
               rel="noopener noreferrer"
               className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-[#FAF7F2]/60 hover:text-white hover:border-white transition-colors"
@@ -41,7 +44,7 @@ export default function Footer() {
               <Youtube className="w-4 h-4" />
             </a>
             <a
-              href={siteConfig.socialLinks.facebook}
+              href={links.facebook}
               target="_blank"
               rel="noopener noreferrer"
               className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-[#FAF7F2]/60 hover:text-white hover:border-white transition-colors"
@@ -77,7 +80,7 @@ export default function Footer() {
               📍 Jl. Kemang Timur No. 42, Jakarta Selatan, Indonesia
             </li>
             <li>
-              📞 WhatsApp: +{siteConfig.whatsappNumber}
+              📞 WhatsApp: +{whatsapp}
             </li>
             <li>
               ✉️ Email: info@vatsalyayoga.com

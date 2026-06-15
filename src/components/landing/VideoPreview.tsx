@@ -4,9 +4,10 @@ import React, { useState } from "react"
 import { Play } from "lucide-react"
 import { siteConfig } from "@/config/content"
 
-export default function VideoPreview() {
+export default function VideoPreview({ content }: { content?: typeof siteConfig.videoPreview }) {
   const [isPlaying, setIsPlaying] = useState(false)
-  const youtubeId = siteConfig.videoPreview.youtubeId
+  const data = content || siteConfig.videoPreview
+  const youtubeId = data.youtubeId
 
   return (
     <section className="py-20 bg-[#FAF7F2] relative">
@@ -15,13 +16,13 @@ export default function VideoPreview() {
         {/* Text Header */}
         <div className="space-y-4 mb-10">
           <span className="text-xs font-bold tracking-widest text-accent-rose uppercase">
-            {siteConfig.videoPreview.subtitle}
+            {data.subtitle}
           </span>
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-dark-espresso">
-            {siteConfig.videoPreview.title}
+            {data.title}
           </h2>
           <p className="text-sm md:text-base text-dark-espresso/60 max-w-xl mx-auto">
-            {siteConfig.videoPreview.description}
+            {data.description}
           </p>
         </div>
 

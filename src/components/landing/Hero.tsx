@@ -6,7 +6,9 @@ import { motion } from "framer-motion"
 import { ArrowRight, Sparkles, Heart, Flame } from "lucide-react"
 import { siteConfig } from "@/config/content"
 
-export default function Hero() {
+export default function Hero({ content }: { content?: typeof siteConfig.hero }) {
+  const data = content || siteConfig.hero
+
   return (
     <section id="hero" className="relative min-h-screen pt-32 pb-20 flex items-center overflow-hidden bg-gradient-to-b from-[#FFFDF9] via-[#FAF7F2] to-[#F3EEE5]">
       {/* Decorative Orbs */}
@@ -24,7 +26,7 @@ export default function Hero() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-rose/10 text-accent-rose border border-accent-rose/15 text-xs font-semibold uppercase tracking-wider mb-6 w-fit"
           >
             <Sparkles className="w-3.5 h-3.5" />
-            {siteConfig.hero.highlightText}
+            {data.highlightText}
           </motion.div>
 
           <motion.h1
@@ -33,7 +35,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-dark-espresso leading-[1.1] mb-6"
           >
-            {siteConfig.hero.title}
+            {data.title}
           </motion.h1>
 
           <motion.p
@@ -42,7 +44,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-base md:text-lg text-dark-espresso/70 leading-relaxed font-sans mb-10 max-w-xl"
           >
-            {siteConfig.hero.subtitle}
+            {data.subtitle}
           </motion.p>
 
           <motion.div
@@ -55,14 +57,14 @@ export default function Hero() {
               href="/register"
               className="px-8 py-4 rounded-full bg-accent-rose text-white text-sm font-semibold hover:bg-accent-rose/95 hover:shadow-lg transition-all text-center flex items-center justify-center gap-2 group"
             >
-              {siteConfig.hero.ctaPrimary}
+              {data.ctaPrimary}
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
               href="#program"
               className="px-8 py-4 rounded-full bg-transparent text-dark-espresso border border-dark-espresso/20 text-sm font-semibold hover:bg-dark-espresso/5 transition-all text-center"
             >
-              {siteConfig.hero.ctaSecondary}
+              {data.ctaSecondary}
             </Link>
           </motion.div>
         </div>

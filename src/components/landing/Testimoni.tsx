@@ -5,15 +5,16 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
 import { siteConfig } from "@/config/content"
 
-export default function Testimoni() {
+export default function Testimoni({ content }: { content?: typeof siteConfig.testimonials }) {
   const [activeIndex, setActiveIndex] = useState(0)
+  const data = content || siteConfig.testimonials
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev === 0 ? siteConfig.testimonials.length - 1 : prev - 1))
+    setActiveIndex((prev) => (prev === 0 ? data.length - 1 : prev - 1))
   }
 
   const handleNext = () => {
-    setActiveIndex((prev) => (prev === siteConfig.testimonials.length - 1 ? 0 : prev + 1))
+    setActiveIndex((prev) => (prev === data.length - 1 ? 0 : prev + 1))
   }
 
   return (
@@ -50,21 +51,21 @@ export default function Testimoni() {
                 className="text-center px-4 md:px-12 space-y-6"
               >
                 <p className="text-lg md:text-xl font-serif italic text-dark-espresso leading-relaxed">
-                  "{siteConfig.testimonials[activeIndex].quote}"
+                  "{data[activeIndex].quote}"
                 </p>
 
                 <div className="flex flex-col items-center gap-3">
                   <img
-                    src={siteConfig.testimonials[activeIndex].avatar}
-                    alt={siteConfig.testimonials[activeIndex].name}
+                    src={data[activeIndex].avatar}
+                    alt={data[activeIndex].name}
                     className="w-14 h-14 rounded-full object-cover border border-white shadow-md"
                   />
                   <div>
                     <h4 className="text-sm font-bold text-dark-espresso">
-                      {siteConfig.testimonials[activeIndex].name}
+                      {data[activeIndex].name}
                     </h4>
                     <p className="text-[10px] text-dark-espresso/50 font-medium mt-0.5">
-                      {siteConfig.testimonials[activeIndex].role}
+                      {data[activeIndex].role}
                     </p>
                   </div>
                 </div>
@@ -83,7 +84,7 @@ export default function Testimoni() {
             
             {/* Dots */}
             <div className="flex gap-1.5">
-              {siteConfig.testimonials.map((_, idx) => (
+              {data.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setActiveIndex(idx)}

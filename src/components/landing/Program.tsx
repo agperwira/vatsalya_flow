@@ -5,7 +5,9 @@ import { motion } from "framer-motion"
 import { Calendar, Layers, Activity, Sparkles } from "lucide-react"
 import { siteConfig } from "@/config/content"
 
-export default function Program() {
+export default function Program({ content }: { content?: typeof siteConfig.program }) {
+  const data = content || siteConfig.program
+
   return (
     <section id="program" className="py-24 bg-white relative">
       <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-accent-rose/5 blur-[80px] pointer-events-none" />
@@ -19,16 +21,16 @@ export default function Program() {
             Pilihan Latihan
           </span>
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-dark-espresso leading-tight">
-            {siteConfig.program.title}
+            {data.title}
           </h2>
           <p className="text-sm md:text-base text-dark-espresso/60 font-sans">
-            {siteConfig.program.subtitle}
+            {data.subtitle}
           </p>
         </div>
 
         {/* Programs Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {siteConfig.program.items.map((item, index) => (
+          {data.items.map((item, index) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 30 }}

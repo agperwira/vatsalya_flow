@@ -14,7 +14,18 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { whatsappNumber, instagram, youtube, facebook, maintenanceMode } = await request.json()
+    const { 
+      whatsappNumber, 
+      instagram, 
+      youtube, 
+      facebook, 
+      maintenanceMode,
+      dashboardTitle,
+      dashboardTheme,
+      dashboardWelcomeTitle,
+      dashboardWelcomeSubtitle,
+      landingPageContent
+    } = await request.json()
 
     // Upsert whatsapp number
     await prisma.setting.upsert({
@@ -36,6 +47,37 @@ export async function POST(request: Request) {
       update: { value: JSON.stringify({ enabled: maintenanceMode }) },
       create: { key: "maintenance_mode", value: JSON.stringify({ enabled: maintenanceMode }) }
     })
+
+    // Upsert dashboard customizer settings
+    await prisma.setting.upsert({
+      where: { key: "dashboard_settings" },
+      update: {
+        value: JSON.stringify({
+          title: dashboardTitle,
+          theme: dashboardTheme,
+          welcomeTitle: dashboardWelcomeTitle,
+          welcomeSubtitle: dashboardWelcomeSubtitle,
+        })
+      },
+      create: {
+        key: "dashboard_settings",
+        value: JSON.stringify({
+          title: dashboardTitle,
+          theme: dashboardTheme,
+          welcomeTitle: dashboardWelcomeTitle,
+          welcomeSubtitle: dashboardWelcomeSubtitle,
+        })
+      }
+    })
+
+    // Upsert landing page customization content
+    if (landingPageContent) {
+      await prisma.setting.upsert({
+        where: { key: "landing_page_content" },
+        update: { value: JSON.stringify(landingPageContent) },
+        create: { key: "landing_page_content", value: JSON.stringify(landingPageContent) }
+      })
+    }
 
     return NextResponse.json({ message: "Settings saved successfully" })
   } catch (error) {

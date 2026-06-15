@@ -37,7 +37,7 @@ export async function POST(request: Request) {
         phone,
         trimester: parseInt(trimester),
         role: "MEMBER",
-        isActive: true, // Active by default
+        isActive: false, // Inactive by default, requires admin approval
       }
     })
 

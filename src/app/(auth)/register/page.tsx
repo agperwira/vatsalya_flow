@@ -60,7 +60,7 @@ export default function MemberRegister() {
         throw new Error(resData.message || "Gagal melakukan registrasi")
       }
 
-      toast("Registrasi berhasil! Silakan login dengan akun Anda. 🌸", "success")
+      toast("Registrasi berhasil! Akun Anda sedang menunggu persetujuan (approval) admin. Silakan hubungi admin untuk aktivasi. 🌸", "success")
       router.push("/login")
     } catch (error: any) {
       toast(error.message || "Terjadi kesalahan, silakan coba lagi.", "error")

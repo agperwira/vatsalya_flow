@@ -44,6 +44,7 @@ function LoginForm() {
         redirect: false,
         email: data.email,
         password: data.password,
+        loginType: "member",
       })
 
       if (result?.error) {
